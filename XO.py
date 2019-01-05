@@ -143,7 +143,7 @@ class Game():
                             if Game.Row[i][j] == '-':
                                 Game.CpTemp = str(i)+str(j)
                                 break
-                            break
+                                break
         Game.Row[int(Game.CpTemp[0])][int(Game.CpTemp[1])] = Game.CpChar
         Game.Counter += 1
     def Chck():
