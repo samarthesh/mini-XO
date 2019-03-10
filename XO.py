@@ -10,12 +10,12 @@ class Game(object):
     def ShowTable(self):
         call('clear', shell = True)
         print('O: %s | X: %s' %(self.ScoreBoard['O'], self.ScoreBoard['X']))
-        print('* ! * ! * ! *')
+        print('* ! * ! * !')
         for i in self.Table:
             for j in i:
-                print(j, end = '')
+                print(j, end = '    ')
             print('\n')
-        print('* ! * ! * ! *')
+        print('* ! * ! * !')
     def Play(self):
         self.ShowTable()
         if self.Counter%2 == 0:
@@ -37,7 +37,6 @@ class Player(object):
             choice = str(input('your turn :'))
             if table[int(choice[0]) - 1][int(choice[1]) - 1] == '-':
                 return choice
-                break
             else:
                 print('ERROR!')
 
@@ -52,24 +51,40 @@ class CPU(object):
             if randint(0,1):
                 if self.Game.Table[1][1] == '-':
                     is_done = True
-                    return 11
+                    return '11'
                 else:
-                    for i in range(3):
-                        if self.Game.Table[i][i] == '-':
+                    while not is_done:
+                        tmp = choice(['00', '22', '02', '20'])
+                        if self.Game.Table[int(tmp[0])][int(tmp[1])] == '-':
                             is_done = True
-                            return int(str(i)*2)
-                            break
-        elif self.Game.Counter >= 2:
+                            return tmp
+            else:
+                while not is_done:
+                    tmp = choice(['00', '22', '02', '20'])
+                    if self.Game.Table[int(tmp[0])][int(tmp[1])] == '-':
+                      is_done = True
+                      return tmp
+        elif self.Game.Counter >= 2 and self.Game.Counter <= 3:
+            while not is_done:
+                tmp = choice(['00', '22', '02', '20'])
+                if self.Game.Table[int(tmp[0])][int(tmp[1])] == '-':
+                    is_done = True
+                    return tmp
+        elif self.Game.Counter >= 4:
             for i in self.Game.Table:
                 if i.count(self.PlayerChar) == 2 and i.count('-') == 1:
                     is_done = True
-                    break
                     return str(self.Game.Table.index(i)+(i.index('-')))
                 elif i.count(self.Char) == 2 and i.count('-') == 1:
                     is_done = True
-                    break
                     return str(self.Game.Table.index(i)+(i.index('-')))
             if not is_done:
                 for i in range(3):
-                    if self.Game.Table[0][i] == self.Game.Table[1][i] 
-                    ### to be continued...
+                    tmp = [j[i] for j in self.Game.Table]
+                    if tmp.count(self.PlayerChar) == 2 and tmp.count('-') == 1:
+                        is_done = True
+                        return str(tmp.index('-'))+str(int(str(tmp[tmp.index('-')])[1])-1)
+                    elif tmp.count(self.Char) == 2 and tmp.count('-') == 1:
+                        is_done = True
+                        return str(tmp.index('-'))+str(int(str(tmp[tmp.index('-')])[1])-1)
+                        ### to be to be continued...
