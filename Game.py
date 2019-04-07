@@ -6,23 +6,26 @@ from time import sleep
 ### so let's play!
 class Game(object):
 
-    def __init__(self):
+    def __init__(self, X='X', O='O'):
+### I let you use your favorite char. :)
+        self.OCHAR = O
+        self.XCHAR = X
 ### maybe the players wanted to know about their score!
-    	self.SCOREBOARD = {'X': int(), 'O': int()}
-#### and that's how I decide who's turn is it to play.
-    	self.COUNTER = int()
-
+        self.SCOREBOARD = {self.XCHAR: int(), self.OCHAR: int()}
+### and that's how I decide who's turn is it to play.
+        self.COUNTER = int()
 ### so we want a table to play on it;
 ### how are you going to draw it?!
     def set_table(self):
-        self.TABLE = [['-' for i in range(3)] for j in range(3)]    
+        self.TABLE = [['-' for i in range(3)] for j in range(3)] 
+        self.COUNTER = 0   
 
 ### also you should be able to show it to the people.
     def display_table(self):
         call('clear', shell=True)
 ### now the terimnal is clean af!
-        print('X: {}'.format(self.SCOREBOARD['X']), end=' - ')
-        print('O: {}'.format(self.SCOREBOARD['O']))
+        print('{}: {}'.format(self.XCHAR, self.SCOREBOARD[self.XCHAR]), end=' - ')
+        print('{}: {}'.format(self.OCHAR, self.SCOREBOARD[self.OCHAR]))
         print('\n')
         for i in self.TABLE:
             for j in i:
@@ -37,7 +40,7 @@ class Game(object):
         if not win:
             for i in self.TABLE:
                 if i.count(i[0]) == 3:
-                    if i[0] == 'X' or i[0] == 'O':
+                    if i[0] != '-':
                         win = True
                         self.SCOREBOARD[i[0]] += 1
                         self.display_table()
@@ -50,7 +53,7 @@ class Game(object):
                 for j in self.TABLE:
                     tmp.append(j[i])
                     if tmp.count(tmp[0]) == 3:
-                        if tmp[0] == 'X' or tmp[0] == 'O':
+                        if tmp[0] != '-':
                             win = True
                             self.SCOREBOARD[tmp[0]] += 1
                             self.display_table()
@@ -62,7 +65,7 @@ class Game(object):
         if not win:
             tmp = [self.TABLE[i][i] for i in range(3)]
             if tmp.count(tmp[0]) == 3:
-                if tmp[0] == 'X' or tmp[0] == 'O':
+                if tmp[0] != '-':
                     win = True
                     self.SCOREBOARD[tmp[0]] += 1
                     self.display_table()
@@ -72,7 +75,7 @@ class Game(object):
         if not win:
             tmp = [self.TABLE[0][2], self.TABLE[1][1], self.TABLE[2][0]]
             if tmp.count(tmp[0]) == 3:
-                if tmp[0] == 'X' or tmp[0] == 'O':
+                if tmp[0] != '-':
                     win = True
                     self.SCOREBOARD[tmp[0]] += 1
                     self.display_table()
@@ -80,3 +83,11 @@ class Game(object):
                     self.set_table()
                     sleep(2)
 ### }
+### what if nobody couldn't win!?
+        if not win:
+            if self.COUNTER >= 9:
+                win = True
+                self.display_table()
+                print('no one won the game!')
+                self.set_table
+                sleep(2)
