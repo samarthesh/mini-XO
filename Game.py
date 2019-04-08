@@ -12,8 +12,7 @@ class Game(object):
         self.XCHAR = X
 ### maybe the players wanted to know about their score!
         self.SCOREBOARD = {self.XCHAR: int(), self.OCHAR: int()}
-### and that's how I decide who's turn is it to play.
-        self.COUNTER = int()
+
 ### so we want a table to play on it;
 ### how are you going to draw it?!
     def set_table(self):
