@@ -88,5 +88,5 @@ class Game(object):
                 win = True
                 self.display_table()
                 print('no one won the game!')
-                self.set_table
+                self.set_table()
                 sleep(2)
