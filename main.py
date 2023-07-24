@@ -1,7 +1,7 @@
 import Game, Play
 
 def main():
-    game = Game.Game()
+    game = Game.Game(X='X', O='O')
     game.set_table()
     Xplayer = Play.Player('X', game)
     Oplayer = Play.Player('O', game)
@@ -13,3 +13,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
